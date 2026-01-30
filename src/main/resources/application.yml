@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: weather-service
+
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterWrite=${CACHE_TTL_MINUTES:30}m
+
+weather:
+  api:
+    base-url: https://api.openweathermap.org/data/2.5
+    api-key: ${OPENWEATHER_API_KEY}
+    timeout-seconds: ${API_TIMEOUT_SECONDS:10}
+    max-retries: ${API_MAX_RETRIES:3}
+    retry-delay-ms: ${API_RETRY_DELAY_MS:1000}
+    
+  cache:
+    ttl-minutes: ${CACHE_TTL_MINUTES:30}
+    
+  rate-limit:
+    requests-per-minute: ${RATE_LIMIT_REQUESTS:60}
+    enabled: ${RATE_LIMIT_ENABLED:true}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    com.weatherapp: ${LOG_LEVEL:INFO}
+    org.springframework.web: WARN
+    org.hibernate: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %level - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: always
+    include-binding-errors: always

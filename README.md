@@ -21,7 +21,7 @@ A Spring Boot application that fetches and caches weather data from OpenWeather 
 3. Build and run:
 ```bash
 mvn clean package -DskipTests
-java -jar target/weather-service-0.0.1-SNAPSHOT.jar
+java -jar target/weather-service-1.0.0-SNAPSHOT.jar
 ```
 
 The application will start on `http://localhost:8080`
